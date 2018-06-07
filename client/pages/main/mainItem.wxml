@@ -1,17 +1,7 @@
-<!--
-<template name="mainItem">
-    <view class="kind-list__item">
-        <view id="{{item._id}}" class="weui-flex kind-list__item-hd">
-        <view class="weui-flex__item">{{item.name}}</view>
-        <image class="kind-list__img" src="../../images/home.png" style="width: 64px; height: 64px;"></image>
-        </view>
-    </view>
-</template>
--->
 
 <template name="mainItem">
     <view class="weui-panel__bd kind-list__item">
-        <navigator url="../modify/modify?itemid={{item._id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+        <view bindtap="onBtnCemetery" data-id="{{item._id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
         <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
             <image class="weui-media-box__thumb" src="../../images/home.png" />
         </view>
@@ -19,6 +9,14 @@
             <view class="weui-media-box__title">{{item.name}}</view>
             <view class="weui-media-box__desc">{{item.name}},年龄{{item.age}},经纬度{{item.location}},{{item.locationName}}</view>
         </view>
-        </navigator>
+        </view>
+    </view>
+    <view class="kind-list__item-bd {{item.show ? 'kind-list__item-bd_show' : ''}}">
+        <view class="weui-cells {{item.show? 'weui-cells_show' : ''}}">
+            <view class="weui-form-preview__ft">
+                <view bindtap="onBtnDel" data-id="{{item._id}}" class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active">删除</view>
+                <view bindtap="onBtnMap" data-id="{{item._id}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">导航</view>
+            </view>
+        </view>
     </view>
 </template>

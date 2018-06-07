@@ -9,8 +9,13 @@ Page({
    */
   data: {
     cemetery: null,
-    cemeteryStatus: null,
     pageHide: false,
+  },
+
+  isCemeteryOpen(stoneid){
+    console.log("check", stoneid)
+    const s = this.data.cemeteryStatus[stoneid]
+    return s === true
   },
 
   updateView: function(){
@@ -18,6 +23,50 @@ Page({
     let cemetery = app.dataholder.getAllCemetery()
     if(!cemetery) cemetery = []
     this.setData({ cemetery: cemetery })
+  },
+
+  onBtnDel: function(event){
+    const stoneid = event.currentTarget.dataset.id
+    app.postDelStone(stoneid, ()=>{this.updateView()})
+  },
+
+  onBtnMap: function(event){
+    const stoneid = event.currentTarget.dataset.id
+    const cemetery = this.findCemetery(stoneid)
+    if(!cemetery){
+      console.log('cannot find cemetery', stoneid)
+      return
+    }
+    this.showLocation(cemetery.locationName, cemetery.location[0], cemetery.location[1])
+  },
+
+    /**
+   * 显示位置
+   */
+  showLocation: function(addressName,longitude, latitude){
+    const failFun = res => console.log(res)
+    wx.openLocation({
+      latitude,
+      longitude,
+      scale: 28,
+      address: addressName,
+      fail: failFun,
+    })
+  },
+
+
+  findCemetery: function(stoneid){
+    const res = this.data.cemetery.find((item) => item._id === stoneid)
+    return res
+  },
+
+  onBtnCemetery: function(event){
+    const stoneid = event.currentTarget.dataset.id
+    const cemetery = this.findCemetery(stoneid)
+    if(cemetery){
+      cemetery.show = !(cemetery.show === true)
+    }
+    this.setData({cemetery: this.data.cemetery})
   },
 
   /**
