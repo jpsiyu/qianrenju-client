@@ -1,0 +1,82 @@
+<!--pages/add/add.wxml-->
+<!-- 
+<view class='jumbotron'>
+  <label> 添加信息</label>
+  <form bindsubmit='formSubmit'>
+    <div class='form-group'>
+      <label>名字：</label>
+      <input type='text' class='form-control' name='inputName' required placeholder='姓名'/>
+    </div>
+
+    <div class='form-group'>
+      <label>位置: {{addrName}}</label>
+      <input type='button' class='form-control' name='location' />
+      <button class='form-control btn-primary' bindtap='chooseLocation'>获取位置</button>
+    </div>
+    <div class='form-group'>
+      <label>经纬:{{lngLat}}</label>
+    </div>
+    <button class='btn-primary' form-type='submit'>提交</button>
+  </form>
+</view>
+-->
+
+<view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
+  <view class="page__hd">
+    <view class="page__title">新建</view>
+    <view class="page_desc">添加一位前人</view>
+  </view>
+  <view class="page__bd">
+    <!--性别选择 -->
+    <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errMsg}}</view>
+    <form bindsubmit="formSubmit">
+      <view class="weui-cells weui-cells_after-title">
+        <radio-group bindchange="radioChange">
+            <label class="weui-cell weui-check__label" wx:for="{{radioItems}}" wx:key="value">
+                <radio class="weui-check" value="{{item.value}}" checked="{{item.checked}}"/>
+
+                <view class="weui-cell__bd">{{item.name}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-radio" wx:if="{{item.checked}}">
+                    <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                </view>
+            </label>
+        </radio-group>
+    </view>
+    <!-- 前人信息 -->
+    <view class="weui-cells__title">表单</view>
+      <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell weui-cell_input">
+              <view class="weui-cell__hd">
+                  <view class="weui-label">姓名</view>
+              </view>
+              <view class="weui-cell__bd">
+                  <input class="weui-input" name="name" placeholder="请输入姓名"/>
+              </view>
+          </view>
+          <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                  <view class="weui-label">年龄</view>
+              </view>
+              <view class="weui-cell__bd">
+                  <input class="weui-input" type='number' name="age" placeholder="请输入年龄" />
+              </view>
+          </view>
+          <view class="weui-cell weui-cell_input weui-cell_vcode">
+              <view class="weui-cell__hd">
+                  <view class="weui-label">位置</view>
+              </view>
+              <view class="weui-cell__hd">
+                  <view class="weui-label">{{addrName}}</view>
+              </view>
+              <view class="weui-cell__ft">
+                  <btn class="weui-vcode-btn" bindtap='chooseLocation'>获取位置</btn>
+              </view>
+          </view>
+      </view>
+      <view class="weui-cells__tips">底部说明文字底部说明文字</view>
+      <view class="weui-btn-area">
+        <button class="weui-btn" type="primary" formType="submit">确定</button>
+      </view>
+      </form>
+  </view>
+</view>

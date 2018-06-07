@@ -1,0 +1,36 @@
+{
+  "pages":[
+    "pages/main/main",
+    "pages/add/add",
+    "pages/map/map",
+    "pages/modify/modify"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "前人居",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar":{
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_select.png",
+        "text": "主页"
+      },
+      {
+        "pagePath": "pages/add/add",
+        "iconPath": "images/add.png",
+        "selectedIconPath": "images/add_select.png",
+        "text": "新建"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "selectedIconPath": "images/map_select.png",
+        "iconPath": "images/map.png",
+        "text": "地图"
+      }
+    ]
+  }
+}

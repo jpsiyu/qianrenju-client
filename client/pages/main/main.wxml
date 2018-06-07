@@ -1,0 +1,16 @@
+<import src="mainItem.wxml" />
+
+<view class="page">
+  <view class="page__hd">
+    <view class="page__title">前人居</view>
+    <view class="page__desc">前人居记载前人们的居住位置，小孝顺们再不不用担心找不到姥姥啦！</view>
+  </view>
+  <view class="page__bd page__bd_spacing">
+    <view class="kind-list">
+      <block wx:for="{{cemetery}}" wx:key="index">
+        <template is="mainItem" data="{{item}}">
+      </template>
+      </block>
+    </view>
+  </view>
+</view>

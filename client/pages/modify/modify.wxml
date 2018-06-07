@@ -1,0 +1,4 @@
+<!--pages/modify/modify.wxml-->
+<text>pages/modify/modify.wxml</text>
+
+<button bindtap="onBtnDel">Delete</button>

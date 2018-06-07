@@ -1,0 +1,4 @@
+<view class='page'>
+  <button bindtap='showLocation'>显示位置</button>
+  <button bindtap='chooseLocation'>选择位置</button>
+</view>
