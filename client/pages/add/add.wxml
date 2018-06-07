@@ -1,26 +1,3 @@
-<!--pages/add/add.wxml-->
-<!-- 
-<view class='jumbotron'>
-  <label> 添加信息</label>
-  <form bindsubmit='formSubmit'>
-    <div class='form-group'>
-      <label>名字：</label>
-      <input type='text' class='form-control' name='inputName' required placeholder='姓名'/>
-    </div>
-
-    <div class='form-group'>
-      <label>位置: {{addrName}}</label>
-      <input type='button' class='form-control' name='location' />
-      <button class='form-control btn-primary' bindtap='chooseLocation'>获取位置</button>
-    </div>
-    <div class='form-group'>
-      <label>经纬:{{lngLat}}</label>
-    </div>
-    <button class='btn-primary' form-type='submit'>提交</button>
-  </form>
-</view>
--->
-
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__hd">
     <view class="page__title">新建</view>
@@ -75,6 +52,7 @@
       </view>
       <view class="weui-cells__tips">底部说明文字底部说明文字</view>
       <view class="weui-btn-area">
+        <button class="weui-btn" type="warn" formType="reset">清空数据</button>
         <button class="weui-btn" type="primary" formType="submit">确定</button>
       </view>
       </form>

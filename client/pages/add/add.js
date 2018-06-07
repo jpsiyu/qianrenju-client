@@ -31,7 +31,7 @@ Page({
       this.data.latitude = res.latitude
       this.data.lngLat = `(${res.longitude}, ${res.latitude})`
 
-      console.log(res, this.data)
+      //console.log(res, this.data)
       this.setData(this.data )
     }
 
@@ -49,6 +49,8 @@ Page({
       msg = '名字长度0到6个字符'
     }else if(!isNumber){
       msg = '年龄字段输入有误'
+    }else if(!this.data.longitude || !this.data.latitude ){
+      msg = '位置未正确设置'
     }else{
       ok = true
     }

@@ -7,7 +7,8 @@ App({
   dataholder: false,
   authorize: false,
   eventListener: false,
-  serverUrl: 'https://v9kxdipu.qcloud.la',
+  //serverUrl: 'https://v9kxdipu.qcloud.la',
+  serverUrl: 'https://145783848.qianrenju.club',
 
   onLaunch: function() {
     this.init()
@@ -41,6 +42,9 @@ App({
       }
     }
 
+    const failCallback = (res) => {
+      console.log('fail', res)
+    }
     wx.request({
       //url: 'http://localhost/api/openid',
       url: this.serverUrl + '/api/openid',
@@ -48,7 +52,8 @@ App({
       header: {
           'content-type': 'application/json'
       },
-      success: successCallback
+      success: successCallback,
+      fail: failCallback,
     })
   },
   
