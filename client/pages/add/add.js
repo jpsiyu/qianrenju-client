@@ -24,7 +24,7 @@ Page({
 
   chooseLocation: function () {
     const successCallback = res => {
-      this.data.locationName = res.address ? res.address : '所选位置未命名' 
+      this.data.locationName = res.address ? `${res.name} ${res.address}` : '所选位置未命名' 
       this.data.location = [res.longitude, res.latitude]
       if(res.longitude && res.latitude)
         this.data.lngLat = `${Math.floor(res.longitude)}, ${Math.floor(res.latitude)}`
@@ -148,7 +148,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    this.resetStatus()
   },
 
   /**

@@ -10,6 +10,7 @@ Page({
   data: {
     cemetery: null,
     pageHide: false,
+    loading: true,
   },
 
   isCemeteryOpen(stoneid){
@@ -72,8 +73,12 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    app.eventListener.addEvent('receStones', this, ()=>{this.updateView()})
+  onLoad: function () {
+    const receive = () => {
+      this.setData({loading: false})
+      this.updateView()
+    }
+    app.eventListener.addEvent('receStones', this, receive)
   },
 
   /**
