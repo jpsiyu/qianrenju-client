@@ -75,7 +75,7 @@ Page({
    */
   onLoad: function () {
     const receive = () => {
-      this.setData({loading: false})
+      this.setData({loading: !app.dataholder.receive})
       this.updateView()
     }
     app.eventListener.addEvent('receStones', this, receive)
@@ -91,7 +91,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({pageHide: false})
+    this.setData({
+      pageHide: false,
+      loading: !app.dataholder.receive
+    })
     this.updateView()
   },
 

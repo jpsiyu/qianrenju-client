@@ -49,7 +49,7 @@ Page({
 
   timeLimitCheck: function(){
     const limit = this.isTimeLimit()
-    const placeholder = limit ? '亲，开发者说等一等再让发送!' : '你说你说...'
+    const placeholder = limit ? '鸽子去送信了,还没有回来!' : '你说你说...'
     this.setData({
       timeLimit: this.isTimeLimit(),
       areaPlaceholder: placeholder,

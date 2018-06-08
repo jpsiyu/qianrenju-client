@@ -25,7 +25,20 @@ const getWindowWidth = function(){
   return windowWidth
 }
 
+const alert = (content) => {
+  wx.showModal({
+      content,
+      showCancel: false,
+      success: function (res) {
+          if (res.confirm) {
+              //console.log('用户点击确定')
+          }
+      }
+  });
+}
+
 module.exports = {
   formatTime: formatTime,
   getWindowWidth: getWindowWidth,
+  alert, 
 }

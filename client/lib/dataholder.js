@@ -3,10 +3,12 @@ const Cemetery = require('./cemetery.js')
 class Dataholder{
   constructor(){
     this.cemeteryList = null
+    this.receive = false
   }
 
   initCemetery(stones){
     this.cemeteryList = stones.map( item => new Cemetery(item))
+    this.receive = true
   }
 
   addCemetery(stone){

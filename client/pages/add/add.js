@@ -39,11 +39,14 @@ Page({
     const nameLen = this.data.name.length
     const reg=/^[0-9]+.?[0-9]*$/
     const isNumber = reg.test(this.data.age)
+    const age = isNumber? Number(this.data.age) : false
 
     if(nameLen <=0 || nameLen > 6){
       msg = '名字长度0到6个字符'
     }else if(!isNumber){
       msg = '年龄字段输入有误'
+    }else if(age > 130){
+      msg = '年龄超越了限制:130' 
     }else if(!this.data.location[0]|| !this.data.location[1]){
       msg = '位置未正确设置'
     }else{

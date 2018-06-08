@@ -1,6 +1,7 @@
 const Authorize = require('./lib/authorize.js')
 const Dataholder = require('./lib/dataholder.js')
 const EventListener = require('./lib/eventListener.js')
+const util = require('./lib/util.js')
 
 App({
   userInfo: false,
@@ -39,21 +40,19 @@ App({
         const openid = serverMsg.data.openid 
         this.authorize.setOpenId(openid)
         this.requestStones()
+      }else{
+        util.alert(serverMsg.message)
       }
     }
 
-    const failCallback = (res) => {
-      console.log('fail', res)
-    }
     wx.request({
-      //url: 'http://localhost/api/openid',
       url: this.serverUrl + '/api/openid',
       data: {code},
       header: {
           'content-type': 'application/json'
       },
       success: successCallback,
-      fail: failCallback,
+      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
     })
   },
   
@@ -73,7 +72,6 @@ App({
   
   requestStones: function() {
     wx.request({
-      //url: 'http://203.195.207.74/api/stones',
       url: this.serverUrl + '/api/stones',
       data: {openid: this.authorize.openid},
       success: (res) => {
@@ -81,46 +79,49 @@ App({
         if(serverMsg.ok){
           this.dataholder.initCemetery(serverMsg.data.stones)
           this.eventListener.triggerEvent('receStones')
+        }else{
+          util.alert(serverMsg.message)
         }
       },
-      fail: () => {console.log('err')}
+      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
     })
   },
 
   requestAddStone: function(name, age, gender, location, locationName, callback){
     const owner = this.authorize.openid
     wx.request({
-      //url: 'http://localhost/api/stone',
       url: this.serverUrl + '/api/stone',
       data: {owner, name, age, gender, location, locationName},
       method: 'POST',
       success: (res) => {
         const serverMsg = res.data
         if(serverMsg.ok){
-          console.log('success', serverMsg.data.stone)
           this.dataholder.addCemetery(serverMsg.data.stone)
           callback()
+        }else{
+          util.alert(serverMsg.message)
         }
       },
-      fail: () => {console.log('err')}
+      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
     })
   },
 
   postDelStone: function(stoneid, callback){
     const owner = this.authorize.openid
     wx.request({
-      //url: 'http://localhost/api/delete',
       url: this.serverUrl + '/api/delete',
       data: {owner, stoneid},
       method: 'DELETE',
       success: (res) => {
         const serverMsg = res.data
         if(serverMsg.ok){
-          console.log('delete success')
           this.dataholder.deleteCemetery(stoneid)
           callback()
+        }else{
+          util.alert(serverMsg.message)
         }
-      }
+      },
+      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
     })
   },
 
@@ -131,8 +132,13 @@ App({
       data: {owner, msg},
       method: 'POST',
       success: (res) => {
-        callback()
-      }
+        const serverMsg = res.data
+        if(serverMsg.ok)
+          callback()
+        else
+          util.alert(serverMsg.message)
+      },
+      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
     })
   },
 })
