@@ -1,104 +1,128 @@
 const util = require('./util.js')
 
+class CommunicateOptions{
+    constructor(method, path, data, success){
+        this.method = method
+        this.path = path
+        this.data = data
+        this.success = success
+    }
+}
+
 class Communicate {
     constructor(){
         this.serverUrl = 'https://145783848.qianrenju.club'
         //this.serverUrl = 'http://localhost'
+        this.waiting = false
+    }
+
+    willSend2Server(){
+        this.waiting = true
+    }
+    receFromServer(){
+        this.waiting = false
+    }
+    send2Server(options){
+        wx.request({
+            url: this.serverUrl + options.path,
+            method: options.method,
+            data: options.data,
+            success: options.success,
+            fail: res => util.wxAlert(res),
+            compelete: () => this.receFromServer()
+        })
     }
 
     requestOpenId(code){
-        const successCallback = (res) => {
-          const serverMsg = res.data
-          if(serverMsg.ok){
-            const openid = serverMsg.data.openid 
-            getApp().authorize.setOpenId(openid)
-            this.requestStones()
-          }else{
-            util.alert(serverMsg.message)
-          }
-        }
-    
-        wx.request({
-          url: this.serverUrl + '/api/openid',
-          data: {code},
-          header: {
-              'content-type': 'application/json'
-          },
-          success: successCallback,
-          fail: res => util.wxAlert(res)
-        })
+        const options = new CommunicateOptions(
+            'GET',
+            '/api/openid',
+            {code},
+            res => {
+                const serverMsg = res.data
+                if(serverMsg.ok){
+                  const openid = serverMsg.data.openid 
+                  getApp().authorize.setOpenId(openid)
+                  this.requestStones()
+                }else{
+                  util.alert(serverMsg.message)
+                }
+            }
+        )
+        this.send2Server(options)
     }
 
     requestStones() {
-        wx.request({
-          url: this.serverUrl + '/api/stones',
-          data: {openid: getApp().authorize.openid},
-          success: (res) => {
-            const serverMsg = res.data
-            if(serverMsg.ok){
-              getApp().dataholder.initCemetery(serverMsg.data.stones)
-              getApp().eventListener.triggerEvent('receStones')
-            }else{
-              util.alert(serverMsg.message)
+        const options = new CommunicateOptions(
+            'GET',
+            '/api/stones',
+            {openid: getApp().authorize.openid},
+            res => {
+              const serverMsg = res.data
+              if(serverMsg.ok){
+                getApp().dataholder.initCemetery(serverMsg.data.stones)
+                getApp().eventListener.triggerEvent('receStones')
+              }else{
+                util.alert(serverMsg.message)
+              }
             }
-          },
-          fail: res => util.wxAlert(res)
-        })
+        )
+        this.send2Server(options)
     }
     
     requestAddStone(name, age, gender, location, locationName, callback){
         const owner = getApp().authorize.openid
-        wx.request({
-          url: this.serverUrl + '/api/stone',
-          data: {owner, name, age, gender, location, locationName},
-          method: 'POST',
-          success: (res) => {
-            const serverMsg = res.data
-            if(serverMsg.ok){
-              getApp().dataholder.addCemetery(serverMsg.data.stone)
-              callback()
-            }else{
-              util.alert(serverMsg.message)
+        const options = new CommunicateOptions(
+            'POST',
+            '/api/stone',
+            {owner, name, age, gender, location, locationName},   
+            res => {
+                const serverMsg = res.data
+                if(serverMsg.ok){
+                  getApp().dataholder.addCemetery(serverMsg.data.stone)
+                  callback()
+                }else{
+                  util.alert(serverMsg.message)
+                }
             }
-          },
-          fail: res => util.wxAlert(res)
-        })
+        )
+        this.send2Server(options)
     }
     
     postDelStone(stoneid, callback){
         const owner = getApp().authorize.openid
-        wx.request({
-          url: this.serverUrl + '/api/delete',
-          data: {owner, stoneid},
-          method: 'DELETE',
-          success: (res) => {
-            const serverMsg = res.data
-            if(serverMsg.ok){
-              getApp().dataholder.deleteCemetery(stoneid)
-              callback()
-            }else{
-              util.alert(serverMsg.message)
+        const options = new CommunicateOptions(
+            'DELETE',
+            '/api/delete',
+            {owner, stoneid},
+            res => {
+                const serverMsg = res.data
+                if(serverMsg.ok){
+                  getApp().dataholder.deleteCemetery(stoneid)
+                  callback()
+                }else{
+                  util.alert(serverMsg.message)
+                }
             }
-          },
-          fail: res => util.wxAlert(res)
-        })
+        )
+        this.send2Server(options)
     }
     
     postFeedback(msg, callback){
         const owner = getApp().authorize.openid
-        wx.request({
-          url: this.serverUrl + '/api/feedback',
-          data: {owner, msg},
-          method: 'POST',
-          success: (res) => {
-            const serverMsg = res.data
-            if(serverMsg.ok)
-              callback()
-            else
-              util.alert(serverMsg.message)
-          },
-          fail: res => util.wxAlert(res)
-        })
+        const options = new CommunicateOptions(
+            'POST',
+            '/api/feedback',
+            {owner, msg},
+            res => {
+                const serverMsg = res.data
+                if(serverMsg.ok)
+                  callback()
+                else
+                  util.alert(serverMsg.message)
+            }
+        )
+        this.send2Server(options)
     }
 }
 

@@ -14,7 +14,6 @@ Page({
   },
 
   isCemeteryOpen(stoneid){
-    console.log("check", stoneid)
     const s = this.data.cemeteryStatus[stoneid]
     return s === true
   },
