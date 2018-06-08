@@ -25,39 +25,6 @@ class Database {
         })
     }
 
-    // find user by name
-    findUserByName(username, callback, errCallback){
-        User.findOne({username}, (err, user) => {
-            if(err)
-                this.err(err, errCallback)
-            else
-                callback(user)
-        })
-    }
-
-    // find user by name or email
-    findUserByNameOrEmail(username, email, callback, errCallback){
-        User.findOne({$or: [
-            {username},
-            {email},
-        ]}, (err, user) => {
-            if(err)
-                this.err(err, errCallback)
-            else
-                callback(user)
-        })
-    }
-
-    // insert user
-    insertUser(user, callback, errCallback){
-        user.save( (err, user) => {
-            if (err)
-                this.err(err, errCallback)
-            else
-                callback(user)
-        })
-    }
-
     // fetch stones
     fetchStones(owner, callback, errCallback){
         Stone.find({owner}, (err, stones) => {
@@ -101,24 +68,17 @@ class Database {
     }
 }
 
-const userSchema = mongoose.Schema({
-    username: String,
-    email: String,
-    password: String,
-})
-
 const stoneSchema = mongoose.Schema({
     owner: Object,
     name: String,
     age: Number,
+    gender: String,
     location: [Number],
     locationName: String,
 })
-const User = mongoose.model('User', userSchema)
 const Stone = mongoose.model('Stone', stoneSchema)
 
 module.exports = {
     Database,
-    User,
     Stone,
 }

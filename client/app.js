@@ -9,6 +9,7 @@ App({
   eventListener: false,
   //serverUrl: 'https://v9kxdipu.qcloud.la',
   serverUrl: 'https://145783848.qianrenju.club',
+  //serverUrl: 'http://localhost',
 
   onLaunch: function() {
     this.init()
@@ -87,18 +88,19 @@ App({
     })
   },
 
-  requestAddStone: function(name, age, location, locationName, callback){
+  requestAddStone: function(name, age, gender, location, locationName, callback){
     const owner = this.authorize.openid
     wx.request({
       //url: 'http://localhost/api/stone',
       url: this.serverUrl + '/api/stone',
-      data: {owner, name, age, location, locationName},
+      data: {owner, name, age, gender, location, locationName},
       method: 'POST',
       success: (res) => {
         const serverMsg = res.data
         if(serverMsg.ok){
           console.log('success', serverMsg.data.stone)
-          callback(serverMsg.data.stone)
+          this.dataholder.addCemetery(serverMsg.data.stone)
+          callback()
         }
       },
       fail: () => {console.log('err')}

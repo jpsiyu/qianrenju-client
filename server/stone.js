@@ -32,6 +32,7 @@ const addStone = (req, res, database) => {
         location: req.body.location,
         locationName: req.body.locationName,
         age: req.body.age,
+        gender: req.body.gender,
     })
     const insertCallback = stone => {
         if(stone)

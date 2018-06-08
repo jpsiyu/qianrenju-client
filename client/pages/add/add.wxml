@@ -27,7 +27,7 @@
                   <view class="weui-label">姓名</view>
               </view>
               <view class="weui-cell__bd">
-                  <input class="weui-input" name="name" placeholder="请输入姓名"/>
+                  <input class="weui-input" name="name" value="{{name}}" bindinput="onNameChange" placeholder="请输入姓名"/>
               </view>
           </view>
           <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -35,7 +35,7 @@
                   <view class="weui-label">年龄</view>
               </view>
               <view class="weui-cell__bd">
-                  <input class="weui-input" type='number' name="age" placeholder="请输入年龄" />
+                  <input class="weui-input" type='number' value="{{age}}" name="age" bindinput="onAgeChange" placeholder="请输入年龄" />
               </view>
           </view>
           <view class="weui-cell weui-cell_input weui-cell_vcode">
@@ -43,16 +43,15 @@
                   <view class="weui-label">位置</view>
               </view>
               <view class="weui-cell__hd">
-                  <view class="weui-label">{{addrName}}</view>
+                  <view class="weui-label">{{lngLat}}</view>
               </view>
               <view class="weui-cell__ft">
                   <btn class="weui-vcode-btn" bindtap='chooseLocation'>获取位置</btn>
               </view>
           </view>
       </view>
-      <view class="weui-cells__tips">底部说明文字底部说明文字</view>
+      <view class="weui-cells__tips">{{locationName}}</view>
       <view class="weui-btn-area">
-        <button class="weui-btn" type="warn" formType="reset">清空数据</button>
         <button class="weui-btn" type="primary" formType="submit">确定</button>
       </view>
       </form>

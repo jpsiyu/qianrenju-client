@@ -1,16 +1,16 @@
-const startId = 1000
+const Cemetery = require('./cemetery.js')
 
 class Dataholder{
   constructor(){
     this.cemeteryList = null
   }
 
-  initCemetery(cemetery){
-    this.cemeteryList = cemetery
+  initCemetery(stones){
+    this.cemeteryList = stones.map( item => new Cemetery(item))
   }
 
   addCemetery(stone){
-    this.cemeteryList.push(stone) 
+    this.cemeteryList.push(new Cemetery(stone)) 
   }
 
   deleteCemetery(stoneid){

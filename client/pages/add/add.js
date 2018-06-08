@@ -7,49 +7,44 @@ Page({
    * 页面的初始数据
    */
   data: {
-    longitude: null,
-    latitude: null,
+    name: '',
+    age: '',
+    gender: 'male',
+    location: [],
+    locationName:'未设置', 
+    radioItems: [
+      {value: 'male', name: '男性', checked: true},
+      {value: 'female', name: '女性', checked: false},
+    ],
     lngLat: '',
-    addrName: '未设置',
-    name: null,
-    radioItems: [],
     showTopTips: false,
     errMsg: '',
   },
-
   timeoutHandler: null,
 
   chooseLocation: function () {
-
     const successCallback = res => {
-      if(res.name) this.data.addrName = res.name
-      else if(res.address) this.data.addrName = res.address
-      else this.data.addrName = '所选位置未命名' 
-
-
-      this.data.longitude = res.longitude
-      this.data.latitude = res.latitude
-      this.data.lngLat = `(${res.longitude}, ${res.latitude})`
-
-      //console.log(res, this.data)
+      this.data.locationName = res.address ? res.address : '所选位置未命名' 
+      this.data.location = [res.longitude, res.latitude]
+      if(res.longitude && res.latitude)
+        this.data.lngLat = `${Math.floor(res.longitude)}, ${Math.floor(res.latitude)}`
       this.setData(this.data )
     }
-
     wx.chooseLocation({success: successCallback})
   },
 
-  fromCheck(formData){
+  fromCheck(){
     let msg = ''
     let ok = false
-    const nameLen = formData.name.length
+    const nameLen = this.data.name.length
     const reg=/^[0-9]+.?[0-9]*$/
-    const isNumber = reg.test(formData.age)
+    const isNumber = reg.test(this.data.age)
 
     if(nameLen <=0 || nameLen > 6){
       msg = '名字长度0到6个字符'
     }else if(!isNumber){
       msg = '年龄字段输入有误'
-    }else if(!this.data.longitude || !this.data.latitude ){
+    }else if(!this.data.location[0]|| !this.data.location[1]){
       msg = '位置未正确设置'
     }else{
       ok = true
@@ -67,29 +62,36 @@ Page({
    * 表单提交
    */
   formSubmit: function(event){
-    const checkRes = this.fromCheck(event.detail.value)
+    const checkRes = this.fromCheck()
     if(!checkRes.ok){
       this.setData({errMsg: checkRes.msg})
       this.showTopTips()
       return
     }
-    let inputName = event.detail.value.name
-    if (inputName == '')
-      inputName = "无名"
-    const age = Number(event.detail.value.age)
-    
-    const successCallback = (stone) => {
-      app.dataholder.addCemetery(stone)
+    const age = Number(this.data.age)
+    const successCallback = () => {
       wx.switchTab({url: '/pages/main/main'})
+      this.resetStatus()
     }
 
     app.requestAddStone(
-      inputName, 
+      this.data.name, 
       age,
-      [this.data.longitude, this.data.latitude],
-      this.data.addrName,
+      this.data.gender,
+      this.data.location,
+      this.data.locationName,
       successCallback,
     )
+  },
+
+  onNameChange(event){
+    const v = event.detail.value
+    this.data.name = v
+  },
+
+  onAgeChange(event){
+    const v = event.detail.value
+    this.data.age = v
   },
 
 
@@ -97,16 +99,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.setData({
-      radioItems: [
-        {value: 'male', name: '男性', checked: true},
-        {value: 'female', name: '女性', checked: false},
-      ]
-    })
   },
+
 
   radioChange: function(event){
     const choose = event.detail.value
+    this.data.gender = choose
+    this.changeRadioStatus(choose)
+  },
+
+  changeRadioStatus(choose){
     this.data.radioItems.map( item => {
       if(item.value === choose)
         item.checked = true
@@ -114,6 +116,18 @@ Page({
         item.checked = false
     })
     this.setData({radioItems: this.data.radioItems})
+  },
+
+  resetStatus: function(){
+    this.setData({
+      name: '',
+      age: '',
+      gender: 'male',
+      locationName: '未设置',
+      lngLat: '',
+      showTopTips: false,
+    })
+    this.changeRadioStatus(this.data.gender)
   },
 
   /**
@@ -127,7 +141,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
