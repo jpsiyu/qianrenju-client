@@ -23,13 +23,24 @@ class Communicate {
         this.waiting = false
     }
     send2Server(options){
+        if(this.waiting){
+            console.log(`block ${options.path}, communicating...`)
+            return
+        }
+
+        this.willSend2Server()
         wx.request({
             url: this.serverUrl + options.path,
             method: options.method,
             data: options.data,
-            success: options.success,
-            fail: res => util.wxAlert(res),
-            compelete: () => this.receFromServer()
+            success: res => {
+                this.receFromServer()
+                options.success(res)
+            },
+            fail: res => {
+                this.receFromServer()
+                util.wxAlert(res)
+            }
         })
     }
 
