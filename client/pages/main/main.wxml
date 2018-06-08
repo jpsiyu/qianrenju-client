@@ -6,12 +6,6 @@
     <view class="page__desc">记载前人们的居住位置，小孝顺们再也不用担心找不到姥姥啦！</view>
   </view>
   <view class="page__bd page__bd_spacing">
-    <block wx:if="{{loading}}">
-      <view class="weui-loadmore">
-          <view class="weui-loading"></view>
-          <view class="weui-loadmore__tips">正在加载</view>
-      </view>
-    </block>
     <view class="kind-list">
       <block wx:for="{{cemetery}}" wx:key="index">
         <template is="mainItem" data="{{item}}">

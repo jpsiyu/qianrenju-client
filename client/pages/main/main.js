@@ -10,7 +10,6 @@ Page({
   data: {
     cemetery: null,
     pageHide: false,
-    loading: true,
   },
 
   isCemeteryOpen(stoneid){
@@ -74,7 +73,6 @@ Page({
    */
   onLoad: function () {
     const receive = () => {
-      this.setData({loading: !app.dataholder.receive})
       this.updateView()
     }
     app.eventListener.addEvent('receStones', this, receive)
@@ -92,7 +90,6 @@ Page({
   onShow: function () {
     this.setData({
       pageHide: false,
-      loading: !app.dataholder.receive
     })
     this.updateView()
   },

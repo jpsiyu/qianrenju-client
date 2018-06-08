@@ -16,12 +16,17 @@ class Communicate {
         this.waiting = false
     }
 
+
     willSend2Server(){
         this.waiting = true
+        wx.showLoading({title: '数据加载中'})
     }
+
     receFromServer(){
         this.waiting = false
+        wx.hideLoading()
     }
+
     send2Server(options){
         if(this.waiting){
             console.log(`block ${options.path}, communicating...`)
