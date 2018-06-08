@@ -72,7 +72,7 @@ Page({
           success: () => {this.timeLimitCheck()}
         })
       }
-      app.postFeedback(this.data.area, successFun)
+      app.communicate.postFeedback(this.data.area, successFun)
     }
   },
 

@@ -28,7 +28,7 @@ Page({
 
   onBtnDel: function(event){
     const stoneid = event.currentTarget.dataset.id
-    app.postDelStone(stoneid, ()=>{this.updateView()})
+    app.communicate.postDelStone(stoneid, ()=>{this.updateView()})
   },
 
   onBtnMap: function(event){

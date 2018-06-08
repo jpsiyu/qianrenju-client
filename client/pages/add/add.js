@@ -77,7 +77,7 @@ Page({
       this.resetStatus()
     }
 
-    app.requestAddStone(
+    app.communicate.requestAddStone(
       this.data.name, 
       age,
       this.data.gender,
