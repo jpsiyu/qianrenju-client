@@ -72,7 +72,7 @@ class Database {
             if(err)
                 this.err(err, errCallback)
             else
-                callback()
+                callback(feedback)
         })
     }
 }
