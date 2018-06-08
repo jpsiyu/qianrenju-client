@@ -1,9 +1,10 @@
 <view class="page" xmlns:wx="http://www.w3.org/1999/xhtml">
   <view class="page__hd">
-    <view class="page__title">新建</view>
-    <view class="page_desc">添加一位前人</view>
+    <view class="page__title">添加</view>
+    <view class="page__desc">记录一位前人的点滴，蓦然发现，这么远，那么近。</view>
   </view>
   <view class="page__bd">
+    <view class="weui-cells__title">信息</view>
     <!--性别选择 -->
     <view class="weui-toptips weui-toptips_warn" wx:if="{{showTopTips}}">{{errMsg}}</view>
     <form bindsubmit="formSubmit">
@@ -20,7 +21,6 @@
         </radio-group>
     </view>
     <!-- 前人信息 -->
-    <view class="weui-cells__title">表单</view>
       <view class="weui-cells weui-cells_after-title">
           <view class="weui-cell weui-cell_input">
               <view class="weui-cell__hd">

@@ -5,7 +5,6 @@ class Authorize{
 
     setOpenId(openid){
         this.openid = openid
-        console.log('setopenid', this.openid)
     }
 }
 

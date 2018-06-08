@@ -22,7 +22,7 @@
         "pagePath": "pages/add/add",
         "iconPath": "images/add.png",
         "selectedIconPath": "images/add_select.png",
-        "text": "新建"
+        "text": "添加"
       },
       {
         "pagePath": "pages/feedback/feedback",

@@ -8,8 +8,8 @@ App({
   authorize: false,
   eventListener: false,
   //serverUrl: 'https://v9kxdipu.qcloud.la',
-  //serverUrl: 'https://145783848.qianrenju.club',
-  serverUrl: 'http://localhost',
+  serverUrl: 'https://145783848.qianrenju.club',
+  //serverUrl: 'http://localhost',
 
   onLaunch: function() {
     this.init()
@@ -27,7 +27,6 @@ App({
   userLogin: function(){
     wx.login({
       success: res => {
-        console.log('userLogin', res)
         this.requestOpenId(res.code)
       }
     })

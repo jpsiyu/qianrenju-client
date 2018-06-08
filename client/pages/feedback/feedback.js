@@ -41,7 +41,7 @@ Page({
     if (value) {
       const now = Date.now()
       const pass = new Date(value.submitTime)
-      if ((now - pass) / (1000) > 72) return false
+      if ((now - pass) / (1000) > 7200) return false
       return true
     }
     return false
@@ -49,7 +49,7 @@ Page({
 
   timeLimitCheck: function(){
     const limit = this.isTimeLimit()
-    const placeholder = limit ? '等一等再发' : '请输入文本'
+    const placeholder = limit ? '亲，开发者说等一等再让发送!' : '你说你说...'
     this.setData({
       timeLimit: this.isTimeLimit(),
       areaPlaceholder: placeholder,
