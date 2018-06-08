@@ -52,7 +52,7 @@ App({
           'content-type': 'application/json'
       },
       success: successCallback,
-      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
+      fail: res => util.wxAlert(res)
     })
   },
   
@@ -83,7 +83,7 @@ App({
           util.alert(serverMsg.message)
         }
       },
-      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
+      fail: res => util.wxAlert(res)
     })
   },
 
@@ -102,7 +102,7 @@ App({
           util.alert(serverMsg.message)
         }
       },
-      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
+      fail: res => util.wxAlert(res)
     })
   },
 
@@ -121,7 +121,7 @@ App({
           util.alert(serverMsg.message)
         }
       },
-      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
+      fail: res => util.wxAlert(res)
     })
   },
 
@@ -138,7 +138,7 @@ App({
         else
           util.alert(serverMsg.message)
       },
-      fail: (res) => {console.log('wx api err:', JSON.stringify(res))}
+      fail: res => util.wxAlert(res)
     })
   },
 })
