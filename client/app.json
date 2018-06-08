@@ -2,8 +2,7 @@
   "pages":[
     "pages/main/main",
     "pages/add/add",
-    "pages/map/map",
-    "pages/modify/modify"
+    "pages/feedback/feedback"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -26,10 +25,10 @@
         "text": "新建"
       },
       {
-        "pagePath": "pages/map/map",
-        "selectedIconPath": "images/map_select.png",
-        "iconPath": "images/map.png",
-        "text": "地图"
+        "pagePath": "pages/feedback/feedback",
+        "selectedIconPath": "images/pigeon_select.png",
+        "iconPath": "images/pigeon.png",
+        "text": "反馈"
       }
     ]
   }

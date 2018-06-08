@@ -8,8 +8,8 @@ App({
   authorize: false,
   eventListener: false,
   //serverUrl: 'https://v9kxdipu.qcloud.la',
-  serverUrl: 'https://145783848.qianrenju.club',
-  //serverUrl: 'http://localhost',
+  //serverUrl: 'https://145783848.qianrenju.club',
+  serverUrl: 'http://localhost',
 
   onLaunch: function() {
     this.init()
@@ -123,5 +123,17 @@ App({
         }
       }
     })
-  }
+  },
+
+  postFeedback: function(msg, callback){
+    const owner = this.authorize.openid
+    wx.request({
+      url: this.serverUrl + '/api/feedback',
+      data: {owner, msg},
+      method: 'POST',
+      success: (res) => {
+        callback()
+      }
+    })
+  },
 })

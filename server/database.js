@@ -66,6 +66,15 @@ class Database {
 
         })
     }
+
+    addFeedback(feedback, callback, errCallback){
+        feedback.save((err, feedback) => {
+            if(err)
+                this.err(err, errCallback)
+            else
+                callback()
+        })
+    }
 }
 
 const stoneSchema = mongoose.Schema({
@@ -78,7 +87,15 @@ const stoneSchema = mongoose.Schema({
 })
 const Stone = mongoose.model('Stone', stoneSchema)
 
+const feedbackSchema = mongoose.Schema({
+    owner: Object,
+    msg: String,
+    createDate: Date,
+})
+const Feedback = mongoose.model('Feedback', feedbackSchema)
+
 module.exports = {
     Database,
     Stone,
+    Feedback,
 }

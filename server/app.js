@@ -7,6 +7,7 @@ const morgan = require('morgan')
 const {Database} = require('./database.js')
 const common = require('./common.js')
 const stone = require('./stone.js')
+const feedback = require('./feedback.js')
 const qs = require('querystring')
 const request = require('request')
 const CONF = require('./config.js')
@@ -20,6 +21,9 @@ app.use(morgan('tiny'))
 app.use(expressValidator())
 
 // routes
+app.post('/api/feedback', (req, res) => {
+    feedback.addFeedback(req, res, database)
+})
 
 app.get('/api/stones', (req, res) => {
     stone.getStones(req, res, database)

@@ -11,6 +11,7 @@ class Cemetery {
         this.show = false
         this.lngLat = `${Math.floor(this.location[0])}, ${Math.floor(this.location[1])}`
         this.genderDesc = this.gender == 'male' ? '男' : '女'
+        this.image = this.gender == 'male' ? '../../images/man.png':'../../images/woman.png'
     }
 }
 
