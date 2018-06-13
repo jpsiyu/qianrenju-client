@@ -19,7 +19,7 @@ class Communicate {
 
     willSend2Server(){
         this.waiting = true
-        wx.showLoading({title: '数据加载中'})
+        wx.showLoading({title: '数据加载中', mask: true})
     }
 
     receFromServer(){
