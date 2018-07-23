@@ -4,20 +4,24 @@ const mongoose = require('mongoose')
 
 class Database {
 
-    constructor(){
+    constructor() {
         this.db = null
     }
 
-    err(err, errCallback){
-        if(errCallback)
+    err(err, errCallback) {
+        if (errCallback)
             errCallback()
         console.log('Err', err)
     }
 
     // connect to database
-    connect(callback){
+    connect(callback) {
         //mongoose.connect('mongodb://localhost/tombstone-wx')
-        mongoose.connect('mongodb://jpsiyu:123456Tombstone@ds151530.mlab.com:51530/tombstone')
+        const options = {
+            server: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } },
+            replset: { socketOptions: { keepAlive: 1, connectTimeoutMS: 30000 } }
+        }
+        mongoose.connect('mongodb://jpsiyu:123456Tombstone@ds151530.mlab.com:51530/tombstone', options)
         this.db = mongoose.connection
         this.db.on('error', err => this.err(err))
         this.db.on('open', () => {
@@ -26,19 +30,19 @@ class Database {
     }
 
     // fetch stones
-    fetchStones(owner, callback, errCallback){
-        Stone.find({owner}, (err, stones) => {
-            if(err)
+    fetchStones(owner, callback, errCallback) {
+        Stone.find({ owner }, (err, stones) => {
+            if (err)
                 this.err(err, errCallback)
             else
                 callback(stones)
-        } )
+        })
     }
 
     // insert stone
-    insertStone(stone, callback, errCallback){
-        stone.save( (err, stone) => {
-            if(err)
+    insertStone(stone, callback, errCallback) {
+        stone.save((err, stone) => {
+            if (err)
                 this.err(err, errCallback)
             else
                 callback(stone)
@@ -46,9 +50,9 @@ class Database {
     }
 
     // find stone by id
-    findStoneById(id, callback, errCallback){
+    findStoneById(id, callback, errCallback) {
         Stone.findById(id, (err, stone) => {
-            if(err)
+            if (err)
                 this.err(err, errCallback)
             else
                 callback(stone)
@@ -56,10 +60,10 @@ class Database {
     }
 
     //delte stone by id
-    deleteStoneById(id, owner, callback, errCallback){
+    deleteStoneById(id, owner, callback, errCallback) {
         const objId = ObjectId(id)
-        Stone.remove({_id: id, owner}, (err) => {
-            if(err)
+        Stone.remove({ _id: id, owner }, (err) => {
+            if (err)
                 this.err(err, errCallback)
             else
                 callback()
@@ -67,9 +71,9 @@ class Database {
         })
     }
 
-    addFeedback(feedback, callback, errCallback){
+    addFeedback(feedback, callback, errCallback) {
         feedback.save((err, feedback) => {
-            if(err)
+            if (err)
                 this.err(err, errCallback)
             else
                 callback(feedback)
