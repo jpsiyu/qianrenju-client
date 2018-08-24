@@ -44,6 +44,7 @@ Page({
       if ((now - pass) / (1000) > 7200) return false
       return true
     }
+    
     return false
   },
 
